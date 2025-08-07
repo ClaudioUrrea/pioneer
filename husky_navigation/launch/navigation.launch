@@ -1,0 +1,27 @@
+<!-- File: navigation_semantic.launch -->
+<launch>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="map_to_odom" args="0 0 0 0 0 0 map odom" />
+
+  <!-- Nodo de navegación -->
+  <node pkg="move_base" type="move_base" name="move_base" output="screen">
+    <param name="base_global_planner" value="navfn/NavfnROS" />
+
+    <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
+
+
+    <rosparam file="$(find husky_navigation)/config/costmap_common_params.yaml" command="load" />
+    <rosparam file="$(find husky_navigation)/config/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find husky_navigation)/config/teb_local_planner_params.yaml" command="load" />
+    
+    <param name="planner_frequency" value="0.2"/>
+    <param name="controller_frequency" value="10.0"/>
+    <param name="planner_patience" value="5.0"/>          <!-- Tiempo máximo si falla el global planner -->
+    <param name="controller_patience" value="5.0"/>       <!-- Tiempo máximo si falla el local planner -->
+    <param name="recovery_behavior_enabled" value="true"/>
+    <param name="clearing_rotation_allowed" value="true"/>
+  </node>
+
+  <!-- Nodo de percepción semántica -->
+  <node pkg="husky_perception" type="lidar_cnn_semantic_integration.py" name="semantic_perception" output="screen" />
+  <node pkg="husky_navigation" type="clear_costmap_node.py" name="costmap_cleaner" output="screen"/>
+</launch>

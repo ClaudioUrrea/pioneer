@@ -1,0 +1,52 @@
+global_costmap:
+  global_frame: odom
+  robot_base_frame: base_link
+  update_frequency: 10.0
+  publish_frequency: 10.0
+  static_map: false
+  rolling_window: true
+  width: 30.0
+  height: 30.0
+  resolution: 0.05
+
+  plugins: 
+    - {name: raw_layer, type: "costmap_2d::ObstacleLayer"}
+    - {name: semantic_layer, type: "costmap_2d::ObstacleLayer"}
+    - {name: raw_inflation, type: "costmap_2d::InflationLayer"}
+    - {name: semantic_inflation, type: "costmap_2d::InflationLayer"}
+
+  ###### 🔵 RAW SCAN OBSTACLE LAYER
+  raw_layer:
+    observation_sources: raw_scan
+    raw_scan:
+      topic: /raw_scan
+      sensor_frame: velodyne
+      data_type: LaserScan
+      marking: true
+      clearing: true
+      obstacle_range: 5.0
+      raytrace_range: 6.0
+
+  ###### 🔴 SEMANTIC OBSTACLE LAYER
+  semantic_layer:
+    observation_sources: semantic_scan
+    semantic_scan:
+      topic: /semantic_scan
+      sensor_frame: velodyne
+      data_type: LaserScan
+      marking: true
+      clearing: false
+      obstacle_range: 6.0
+      raytrace_range: 0.0
+      inf_is_valid: true
+
+  ###### 🟦 INFLACIÓN RAW (MENOR)
+  raw_inflation:
+    inflation_radius: 0.6
+    cost_scaling_factor: 2.0
+
+  ###### 🔴 INFLACIÓN SEMANTIC (MÁS FUERTE)
+  semantic_inflation:
+    inflation_radius: 1.0     # más amplio
+    cost_scaling_factor: 3.0  # más agresivo (cost más alto en menos distancia)
+
