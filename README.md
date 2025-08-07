@@ -54,47 +54,42 @@ navigation.launch
 
 10\. Adjust Parameters Live Install and run the reconfigure tool: sudo
 apt-get install ros-noetic-rqt-reconfigure rosrun rqt_reconfigure
-rqt_reconfigure
-
-10.1. From the GUI, select /semantic_fusion_node. 10.2. Adjust
+rqt_reconfigure - From the GUI, select /semantic_fusion_node. - Adjust
 semantic_fusion_node parameters (e.g., thresholds, rays per priority)
 without restarting the node.
 
-Running Experiments: Once the system is running, execute experiments
+Running Experiments Once the system is running, execute experiments
 using the experiment_runner.py script with the following format: rosrun
-husky_navigation experiment_runner.py \$ON/OFF\$ \$obstacle_name\$
-\$test#\$
-
-ON: Enables the perception system. OFF: Disables the perception system.
-obstacle_name: Name of the obstacle to avoid (e.g., person, backpack,
-chair). test#: Test number (e.g., 01, 05).
+husky_navigation experiment_runner.py \[ON/OFF\] \[obstacle_name\]
+\[test_number\] - ON: Enables the perception system. - OFF: Disables the
+perception system. - obstacle_name: Name of the obstacle to avoid (e.g.,
+person, backpack, chair). - test_number: Test number (e.g., 01, 05).
 
 Example: rosrun husky_navigation experiment_runner.py OFF person 05 This
-runs test #5 with the perception system off, avoiding a person obstacle.
+runs test 5 with the perception system off, avoiding a person obstacle.
 Each experiment generates a .bag file in \~/experiment_bags for later
 analysis.
 
-Analyzing Data: Extract Data from Rosbags Run the analysis script to
+Analyzing Data Extract Data from Rosbags Run the analysis script to
 process .bag files: python3 analyze_experiments.py \~/experiment_bags
 \--salida \~/resultados_analisis This generates an Excel file
 (experimental_results.xlsx) in the specified output directory for
 further analysis.
 
-Generate Graphs: Run the script to create summary figures (e.g., Figures
+Generate Graphs Run the script to create summary figures (e.g., Figures
 10, 11, 12 from the paper): python3 generate_graphs_results.py Output
 figures are saved in the figures folder.
 
-Run Statistical Analysis: Execute the following scripts to generate
+Run Statistical Analysis Execute the following scripts to generate
 tables from the paper:
 
-For Table 2 (assumption checks): bashpython3
-checking_assumptions_anova.py
+For Table 2 (assumption checks): python3 checking_assumptions_anova.py
 
-For Table 4 (ANOVA results): bashpython3 anova.py
+For Table 4 (ANOVA results): python3 anova.py
 
-For Tables 5 and 6 (Tukey HSD results): bashpython3 Tukey.py
+For Tables 5 and 6 (Tukey HSD results): python3 Tukey.py
 
-Repository Structure: /husky_perception/cfg/: Dynamic reconfiguration
+Repository Structure /husky_perception/cfg/: Dynamic reconfiguration
 files (e.g., SemanticFusionConfig.cfg.py). /husky_perception/scripts/:
 Perception nodes (e.g., cnn_detector.py, obstacle_segmentation.py,
 lidar_cnn_semantic_integration.py). /husky_navigation/config/:
@@ -110,16 +105,16 @@ trajectory_run\_\*.png). /data/: Experimental data (e.g.,
 experimental_results.xlsx). /: Root files (this README.md,
 realsense.urdf.xacro).
 
-Data Availability: The synthetic data presented in this study are
-available on FigShare (https://doi.org/10.6084/m9.figshare.29852780) in
-CSV format, with an optional Parquet version. Selected scripts and
+Data Availability The synthetic data presented in this study are
+available on FigShare\[\](https://doi.org/10.6084/m9.figshare.29852780)
+in CSV format, with an optional Parquet version. Selected scripts and
 figures are available in this repository.
 
-License: This project is licensed under the MIT License - see the
-LICENSE file for details.
+License This project is licensed under the MIT License - see the LICENSE
+file for details.
 
-Acknowledgments: This work was supported by the Faculty of Engineering
-of the University of Santiago of Chile, Chile.
+Acknowledgments This work was supported by the Faculty of Engineering of
+the University of Santiago of Chile, Chile.
 
-Contact: For questions, please contact Claudio Urrea at
+Contact For questions, please contact Claudio Urrea at
 claudio.urrea@usach.cl.
