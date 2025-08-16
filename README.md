@@ -1,5 +1,5 @@
-Perception \& Navigation System for Semantic Priority Navigation in
-Mining Robots
+**Perception \& Navigation System for Semantic Priority Navigation in
+Mining Robots**
 
 This repository contains the code, configurations, and resources
 supporting the research paper "SemanticPriority Navigation for
